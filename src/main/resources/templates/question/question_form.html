@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container my-3">
+  <h2 >질문 등록</h2>
+  <form th:action method="post" th:object="${questionForm}">
+    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+      <div th:each="err: ${#fields.allErrors()}" th:text="${err}"></div>
+    </div>
+    <div class="mb-3">
+      <label for="subject" class="form-label" th:text="#{label.question.subject}"></label>
+      <input type="text" id="subject" name="subject" th:field="*{subject}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label" th:text="#{label.question.content}"></label>
+      <input type="text" id="content" th:field="*{content}" name="content" class="form-control">
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="질문 저장하기">
+  </form>
+</div>
+
+</body>
+</html>

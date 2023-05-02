@@ -53,8 +53,8 @@ public class SbbApplicationTests {
         Optional<Question> q = questionRepository.findById(4);
         if(q.isPresent()) {
             Question q1 =q.get();
-            q1.setContent("질문4");
-            q1.setSubject("내용4");
+            q1.setContent("내용4");
+            q1.setSubject("질문4");
             questionRepository.save(q1);
         }
     }
