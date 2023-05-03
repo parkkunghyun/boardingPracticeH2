@@ -4,6 +4,7 @@ import com.boardingH2.boardingPracticeH2.entity.Answer;
 import com.boardingH2.boardingPracticeH2.entity.Question;
 import com.boardingH2.boardingPracticeH2.repository.AnswerRepository;
 import com.boardingH2.boardingPracticeH2.repository.QuestionRepository;
+import com.boardingH2.boardingPracticeH2.service.QuestionService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.Optional;
 public class SbbApplicationTests {
     @Autowired
     private QuestionRepository questionRepository;
+
+
 
     @Autowired
     private AnswerRepository answerRepository;

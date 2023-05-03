@@ -4,6 +4,10 @@ import com.boardingH2.boardingPracticeH2.entity.Question;
 import com.boardingH2.boardingPracticeH2.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,5 +39,13 @@ public class QuestionService {
             return question.get();
         }
         return null;
+    }
+
+    public Page<Question> getList(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page,10, Sort.by(sorts));
+        return questionRepository.findAll(pageable);
+        // 해당 번호와 10은 한페이지당 보여줄 개수!
     }
 }

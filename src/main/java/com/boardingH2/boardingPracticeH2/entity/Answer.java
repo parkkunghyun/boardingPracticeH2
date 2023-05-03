@@ -1,5 +1,6 @@
 package com.boardingH2.boardingPracticeH2.entity;
 
+import com.boardingH2.boardingPracticeH2.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,4 +26,7 @@ public class Answer {
 
     @ManyToOne
     private Question question;
+
+    @ManyToOne
+    private SiteUser author;
 }

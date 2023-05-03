@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,10 +25,12 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
 
+    // localhost:8080/question/list?page=0 이게 게시물 번호가 아님! 페이지 번호임!
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Question> questionList = questionService.getList();
-        model.addAttribute("questionList", questionList);
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Question> paging = questionService.getList(page);
+        // List<Question> questionList = questionService.getList();
+        model.addAttribute("paging", paging);
         return "question/question_list";
     }
 
