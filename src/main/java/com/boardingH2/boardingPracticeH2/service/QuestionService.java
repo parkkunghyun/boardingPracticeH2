@@ -2,6 +2,7 @@ package com.boardingH2.boardingPracticeH2.service;
 
 import com.boardingH2.boardingPracticeH2.entity.Question;
 import com.boardingH2.boardingPracticeH2.repository.QuestionRepository;
+import com.boardingH2.boardingPracticeH2.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,11 @@ import java.util.Optional;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
-    public void create(String subject, String content) {
+    public void create(String subject, String content, SiteUser author) {
         Question q = new Question();
         q.setSubject(subject);
         q.setContent(content);
+        q.setAuthor(author);
         q.setCreateDate(LocalDateTime.now());
         questionRepository.save(q);
     }

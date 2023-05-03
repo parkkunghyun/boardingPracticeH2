@@ -9,4 +9,6 @@ import lombok.Setter;
 public class AnswerForm {
     @NotEmpty(message = "질문 내용은 필수 입니다!")
     private String subject;
+
+
 }

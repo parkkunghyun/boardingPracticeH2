@@ -15,7 +15,7 @@ public class MassProduction {
         for(int i =0; i<300; i++) {
             String sb = String.format("테스트데이터입니다: [%03d]",i);
             String con = "내용무";
-            questionService.create(sb,con);
+            questionService.create(sb,con, null);
         }
     }
 }

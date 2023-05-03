@@ -1,11 +1,14 @@
 package com.boardingH2.boardingPracticeH2.user;
 
+import com.boardingH2.boardingPracticeH2.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -28,5 +31,15 @@ public class UserService {
         // BCryptPasswordEncoder는 BCrypt해싱함수를 사용해서 비밀번호를 암호화
         // 이때 new로 객체를 직접 생성보다는 PasswordEncoder라는 걸 Bean으로 등록해서 사용하기!
         // 통합해서 수정하기 편함!
+    }
+
+    public SiteUser getUser(String username) {
+        Optional<SiteUser> siteUser = userRepository.findByusername(username);
+        if(siteUser.isPresent()) {
+            return siteUser.get();
+        }
+        else {
+            throw new DataNotFoundException("siteuser not found");
+        }
     }
 }

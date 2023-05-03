@@ -61,7 +61,8 @@
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}" >
             <div th:each="err: ${#fields.allErrors()}" th:text="${err}"></div>
         </div>
-        <textarea name="subject" th:field="*{subject}" id="subject" rows="10" class="form-control"></textarea>
+        <textarea sec:authorize="isAnonymous()" disabled th:field="*{subject}" class="form-control" rows="10"></textarea>
+        <textarea sec:authorize="isAuthenticated()" th:field="*{subject}" class="form-control" rows="10"></textarea>
         <input type="submit" value="답변등록"  class="btn btn-primary my-2">
     </form>
 </div>

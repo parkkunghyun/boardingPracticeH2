@@ -5,17 +5,21 @@ import com.boardingH2.boardingPracticeH2.controller.form.QuestionForm;
 import com.boardingH2.boardingPracticeH2.entity.Question;
 import com.boardingH2.boardingPracticeH2.repository.QuestionRepository;
 import com.boardingH2.boardingPracticeH2.service.QuestionService;
+import com.boardingH2.boardingPracticeH2.user.SiteUser;
+import com.boardingH2.boardingPracticeH2.user.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -24,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionController {
     private final QuestionService questionService;
+    private final UserService userService;
 
     // localhost:8080/question/list?page=0 이게 게시물 번호가 아님! 페이지 번호임!
     @GetMapping("/list")
@@ -45,19 +50,23 @@ public class QuestionController {
         return "question/question_detail";
     }
 
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String questionForm(Model model){
         model.addAttribute("questionForm", new QuestionForm());
         return "question/question_form";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String createQuestion( @Validated @ModelAttribute QuestionForm questionForm,
-                                  BindingResult bindingResult) {
+    public String createQuestion(@Validated @ModelAttribute QuestionForm questionForm,
+                                 BindingResult bindingResult, Principal principal) {
         if(bindingResult.hasErrors()) {
             return "question/question_form";
         }
-        questionService.create(questionForm.getSubject(), questionForm.getContent());
+        SiteUser siteUser = userService.getUser(principal.getName());
+        questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 
         return "redirect:/question/list";
     }
